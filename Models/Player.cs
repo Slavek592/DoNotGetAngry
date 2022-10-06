@@ -7,18 +7,21 @@ namespace SP220922.Models
         private String _color;
         public Figure[] Figures;
         //private Player[] _friends;
+        private Map _map;
 
-        public Player(String color, int numberOfFigures, int lengthOfGame)
+        public Player(String color, int numberOfFigures, int lengthOfGame, Map map)
         {
             Figures = new Figure[numberOfFigures];
             for (int i = 0; i < numberOfFigures; i++)
             {
-                Figures[i] = new Figure(lengthOfGame);
+                Figures[i] = new Figure(lengthOfGame, color);
                 Figures[i].Started = false;
             }
             _color = color;
+            _map = map;
             Console.WriteLine("Player " + _color + " is ready.");
             Figures[0].Begin();
+            _map.Places[0].GoHere(Figures[0]);
         }
 
         public void State()
@@ -48,10 +51,12 @@ namespace SP220922.Models
                     if (!Figures[i].Started)
                     {
                         Figures[i].Begin();
+                        _map.Places[0].GoHere(Figures[i]);
                         break;
                     }
                 }
             }
+            _map.Draw();
             State();
             Console.WriteLine("Which figure?");
             int chosenFigure;
@@ -61,7 +66,21 @@ namespace SP220922.Models
                 if (chosenFigure < 0 || chosenFigure >= Figures.Length)
                     Console.WriteLine("No figure moved.");
                 else
-                    Figures[chosenFigure].Go(number);
+                {
+                    if (!Figures[chosenFigure].Ended && Figures[chosenFigure].Started)
+                    {
+                        _map.Places[Figures[chosenFigure].Place].GoOut(Figures[chosenFigure]);
+                        Figures[chosenFigure].Go(number);
+                        if (Figures[chosenFigure].Place >= _map.Length)
+                        {
+                            _map.Places[_map.Length].GoHere(Figures[chosenFigure]);
+                        }
+                        else
+                        {
+                            _map.Places[Figures[chosenFigure].Place].GoHere(Figures[chosenFigure]);
+                        }
+                    }
+                }
             }
             else
             {
@@ -70,7 +89,16 @@ namespace SP220922.Models
                 {
                     if (!Figures[i].Ended && Figures[i].Started)
                     {
+                        _map.Places[Figures[i].Place].GoOut(Figures[i]);
                         Figures[i].Go(number);
+                        if (Figures[i].Place >= _map.Length)
+                        {
+                            _map.Places[_map.Length].GoHere(Figures[i]);
+                        }
+                        else
+                        {
+                            _map.Places[Figures[i].Place].GoHere(Figures[i]);
+                        }
                         break;
                     }
                 }

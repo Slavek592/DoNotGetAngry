@@ -76,16 +76,18 @@ namespace SP220922
                     }
                     
                 }
+                Map map = new AggressiveLinearMap(lengthOfGame);
 
                 Player[] players = new Player[numberOfPlayers];
                 for (int i = 0; i < numberOfPlayers; i++)
                 {
-                    players[i] = new Player(chosenColors[i], numberOfFigures, lengthOfGame);
+                    players[i] = new Player(chosenColors[i], numberOfFigures, lengthOfGame, map);
                 }
 
                 while (true)
                 {
                     bool end = false;
+                    
                     for (int i = 0; i < numberOfPlayers; i++)
                     {
                         players[i].Play();

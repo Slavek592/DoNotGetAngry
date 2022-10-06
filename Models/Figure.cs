@@ -8,13 +8,15 @@ namespace SP220922.Models
         public int Place;
         public bool Ended;
         private int _lengthOfGame;
+        public string Color;
 
-        public Figure(int lengthOfGame)
+        public Figure(int lengthOfGame, string color)
         {
             _lengthOfGame = lengthOfGame;
             Started = false;
             Place = 0;
             Ended = false;
+            Color = color;
         }
 
         public void Begin()
@@ -28,6 +30,12 @@ namespace SP220922.Models
             Place += length;
             if (Place >= _lengthOfGame)
                 Ended = true;
+        }
+
+        public void GoBack()
+        {
+            Place = 0;
+            Started = false;
         }
     }
 }
