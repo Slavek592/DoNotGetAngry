@@ -12,6 +12,7 @@ namespace SP220922
             int numberOfPlayers = 1;
             int lengthOfGame = 1;
             String[] chosenColors = new string[numberOfPlayers];
+            bool aggressivity = true;
             
             while (true)
             {
@@ -67,6 +68,26 @@ namespace SP220922
                             Console.WriteLine("It was not a correct int.");
                         }
                     }
+
+                    while (true)
+                    {
+                        Console.WriteLine("Do You wish an aggressive map?");
+                        string input = Console.ReadLine().ToLower();
+                        if (input == "yes")
+                        {
+                            aggressivity = true;
+                            break;
+                        }
+                        else if (input == "no")
+                        {
+                            aggressivity = false;
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("It was not a answer.");
+                        }
+                    }
                     
                     chosenColors = new string[numberOfPlayers];
                     for (int i = 0; i < numberOfPlayers; i++)
@@ -76,7 +97,11 @@ namespace SP220922
                     }
                     
                 }
-                Map map = new AggressiveLinearMap(lengthOfGame);
+                Map map;
+                if (aggressivity)
+                    map = new AggressiveLinearMap(lengthOfGame);
+                else
+                    map = new PeacefulLinearMap(lengthOfGame);
 
                 Player[] players = new Player[numberOfPlayers];
                 for (int i = 0; i < numberOfPlayers; i++)
