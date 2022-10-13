@@ -12,7 +12,7 @@ namespace SP220922
             int numberOfPlayers = 1;
             int lengthOfGame = 1;
             String[] chosenColors = new string[numberOfPlayers];
-            bool aggressivity = true;
+            bool aggressiveness = true;
             
             while (true)
             {
@@ -23,72 +23,16 @@ namespace SP220922
                 }
                 else
                 {
-                    Console.WriteLine("Do You want to change settings?");
-                    String answer = Console.ReadLine().ToLower();
-                    if (answer.Contains("no"))
-                        newSettings = false;
-                    else
-                        newSettings = true;
+                    newSettings = GetBoolFromUser("Do You want to change settings?");
                 }
 
                 if (newSettings)
                 {
-                    while (true)
-                    {
-                        Console.WriteLine("Choose the number of figures of every player.");
-                        bool correctInt = Int32.TryParse(Console.ReadLine(), out numberOfFigures);
-                        if (correctInt && numberOfFigures > 0)
-                            break;
-                        else
-                        {
-                            Console.WriteLine("It was not a correct int.");
-                        }
-                    }
+                    numberOfPlayers = GetIntFromUser("Choose the number of players.");
+                    numberOfFigures = GetIntFromUser("Choose the number of figures of every player.");
+                    lengthOfGame = GetIntFromUser("Choose the lenght of the game.");
+                    aggressiveness = GetBoolFromUser("Do You wish an aggressive map?");
 
-                    while (true)
-                    {
-                        Console.WriteLine("Choose the number of players.");
-                        bool correctInt = Int32.TryParse(Console.ReadLine(), out numberOfPlayers);
-                        if (correctInt && numberOfPlayers > 0)
-                            break;
-                        else
-                        {
-                            Console.WriteLine("It was not a correct int.");
-                        }
-                    }
-
-                    while (true)
-                    {
-                        Console.WriteLine("Choose the lenght of the game.");
-                        bool correctInt = Int32.TryParse(Console.ReadLine(), out lengthOfGame);
-                        if (correctInt && lengthOfGame > 0)
-                            break;
-                        else
-                        {
-                            Console.WriteLine("It was not a correct int.");
-                        }
-                    }
-
-                    while (true)
-                    {
-                        Console.WriteLine("Do You wish an aggressive map?");
-                        string input = Console.ReadLine().ToLower();
-                        if (input == "yes")
-                        {
-                            aggressivity = true;
-                            break;
-                        }
-                        else if (input == "no")
-                        {
-                            aggressivity = false;
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("It was not a answer.");
-                        }
-                    }
-                    
                     chosenColors = new string[numberOfPlayers];
                     for (int i = 0; i < numberOfPlayers; i++)
                     {
@@ -98,7 +42,7 @@ namespace SP220922
                     
                 }
                 Map map;
-                if (aggressivity)
+                if (aggressiveness)
                     map = new AggressiveLinearMap(lengthOfGame);
                 else
                     map = new PeacefulLinearMap(lengthOfGame);
@@ -127,9 +71,9 @@ namespace SP220922
                     if (end)
                         break;
                 }
-                Console.WriteLine("Do You want to play another game?");
-                String another = Console.ReadLine().ToLower();
-                if (another.Contains("yes"))
+
+                bool newGame = GetBoolFromUser("Do You want to play another game?");
+                if (newGame)
                 {
                     Console.WriteLine("Great, prepare to a new game.");
                     firstGame = false;
@@ -140,6 +84,48 @@ namespace SP220922
                     break;
                 }
             }
+        }
+
+        private static int GetIntFromUser(string question)
+        {
+            int answer;
+            while (true)
+            {
+                Console.WriteLine(question);
+                bool correctInt = Int32.TryParse(Console.ReadLine(), out answer);
+                if (correctInt && answer > 0)
+                    break;
+                else
+                {
+                    Console.WriteLine("It was not a correct int.");
+                }
+            }
+            return answer;
+        }
+
+        private static bool GetBoolFromUser(string question)
+        {
+            bool answer;
+            while (true)
+            {
+                Console.WriteLine(question);
+                string input = Console.ReadLine().ToLower();
+                if (input == "yes")
+                {
+                    answer = true;
+                    break;
+                }
+                else if (input == "no")
+                {
+                    answer = false;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("It was not a correct answer.");
+                }
+            }
+            return answer;
         }
     }
 }
