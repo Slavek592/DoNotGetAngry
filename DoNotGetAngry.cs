@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using SP220922.Models;
 
 namespace SP220922
@@ -39,8 +40,8 @@ namespace SP220922
                         Console.WriteLine("Choose Your color (print it).");
                         chosenColors[i] = Console.ReadLine();
                     }
-                    
                 }
+                
                 Map map;
                 if (aggressiveness)
                     map = new AggressiveLinearMap(lengthOfGame);
@@ -55,20 +56,12 @@ namespace SP220922
 
                 while (true)
                 {
-                    bool end = false;
-                    
                     for (int i = 0; i < numberOfPlayers; i++)
                     {
                         players[i].Play();
                     }
 
-                    for (int i = 0; i < numberOfPlayers; i++)
-                    {
-                        if (players[i].CheckWin())
-                            end = true;
-                    }
-
-                    if (end)
+                    if (players.Any(p => p.CheckWin()))
                         break;
                 }
 
