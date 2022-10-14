@@ -2,22 +2,10 @@ using System.Globalization;
 
 namespace SP220922.Models
 {
-    public class Map
+    public abstract class Map
     {
-        public Place[] Places;
-        public int Length;
-
-        /*public Map(int length)
-        {
-            Length = length;
-            Places = new Place[length + 1];
-            Places[0] = new PeacefulPlace(0);
-            for (int i = 1; i < length; i++)
-            {
-                Places[i] = new AggressivePlace(i);
-            }
-            Places[length] = new PeacefulPlace(length);
-        }*/
+        protected Place[] Places;
+        protected int Length;
 
         public void Draw()
         {
@@ -25,6 +13,21 @@ namespace SP220922.Models
             {
                 place.Draw();
             }
+        }
+
+        public int GetLength()
+        {
+            return Length;
+        }
+
+        public void GoHere(int number, Figure figure)
+        {
+            Places[number].GoHere(figure);
+        }
+
+        public void GoOut(int number, Figure figure)
+        {
+            Places[number].GoOut(figure);
         }
     }
 }
