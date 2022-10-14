@@ -29,7 +29,7 @@ namespace SP220922.Models
             Console.Write(Number.ToString() + ": ");
             if (_figure != null)
             {
-                Console.Write(_figure.Color + " ");
+                Console.Write(_figure.GetColor() + " ");
             }
             if (Number % 10 == 0)
                 Console.WriteLine("");

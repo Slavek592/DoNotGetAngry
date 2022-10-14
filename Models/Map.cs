@@ -1,4 +1,4 @@
-using System.Globalization;
+using System;
 
 namespace SP220922.Models
 {
@@ -13,6 +13,7 @@ namespace SP220922.Models
             {
                 place.Draw();
             }
+            Console.WriteLine("");
         }
 
         public int GetLength()

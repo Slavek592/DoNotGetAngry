@@ -4,38 +4,50 @@ namespace SP220922.Models
 {
     public class Figure
     {
-        public bool Started;
-        public int Place;
-        public bool Ended;
-        private int _lengthOfGame;
-        public string Color;
+        private bool _started;
+        private int _place;
+        private bool _ended;
+        private readonly int _lengthOfGame;
+        private readonly string _color;
 
         public Figure(int lengthOfGame, string color)
         {
             _lengthOfGame = lengthOfGame;
-            Started = false;
-            Place = 0;
-            Ended = false;
-            Color = color;
+            _started = false;
+            _place = 0;
+            _ended = false;
+            _color = color;
         }
 
         public void Begin()
         {
-            Started = true;
+            _started = true;
             Console.WriteLine("The figure is starting.");
         }
 
         public void Go(int length)
         {
-            Place += length;
-            if (Place >= _lengthOfGame)
-                Ended = true;
+            _place += length;
+            if (_place >= _lengthOfGame)
+                _ended = true;
         }
+
+        public int GetPlace()
+        { return _place; }
+        
+        public bool GetStarted()
+        { return _started; }
+        
+        public bool GetEnded()
+        { return _ended; }
+
+        public string GetColor()
+        { return _color; }
 
         public void GoBack()
         {
-            Place = 0;
-            Started = false;
+            _place = 0;
+            _started = false;
         }
     }
 }

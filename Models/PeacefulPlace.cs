@@ -27,7 +27,7 @@ namespace SP220922.Models
             Console.Write(Number.ToString() + ": ");
             foreach (Figure figure in _figures)
             {
-                Console.Write(figure.Color + " ");
+                Console.Write(figure.GetColor() + " ");
             }
             if (Number % 10 == 0)
                 Console.WriteLine("");

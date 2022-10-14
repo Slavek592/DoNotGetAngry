@@ -5,7 +5,7 @@ namespace SP220922.Models
 {
     public class Player
     {
-        private String _color;
+        private readonly String _color;
         private Figure[] _figures;
         private Map _map;
 
@@ -15,7 +15,6 @@ namespace SP220922.Models
             for (int i = 0; i < numberOfFigures; i++)
             {
                 _figures[i] = new Figure(lengthOfGame, color);
-                _figures[i].Started = false;
             }
             _color = color;
             _map = map;
@@ -29,10 +28,11 @@ namespace SP220922.Models
             Console.WriteLine("Player: " + _color);
             for (int i = 0; i < _figures.Length; i++)
             {
-                Console.Write("Figure " + i.ToString() + " is at the place " + _figures[i].Place.ToString() + ", ");
-                if (_figures[i].Ended)
+                Console.Write("Figure " + i.ToString() + " is at the place "
+                              + _figures[i].GetPlace().ToString() + ", ");
+                if (_figures[i].GetEnded())
                     Console.WriteLine("it already ended.");
-                else if (_figures[i].Started)
+                else if (_figures[i].GetStarted())
                     Console.WriteLine("it already started.");
                 else
                     Console.WriteLine("it has not started.");
@@ -48,7 +48,7 @@ namespace SP220922.Models
             {
                 for (int i = 0; i < _figures.Length; i++)
                 {
-                    if (!_figures[i].Started)
+                    if (!_figures[i].GetStarted())
                     {
                         _figures[i].Begin();
                         _map.GoHere(0, _figures[i]);
@@ -67,17 +67,17 @@ namespace SP220922.Models
                     Console.WriteLine("No figure moved.");
                 else
                 {
-                    if (!_figures[chosenFigure].Ended && _figures[chosenFigure].Started)
+                    if (!_figures[chosenFigure].GetEnded() && _figures[chosenFigure].GetStarted())
                     {
-                        _map.GoOut(_figures[chosenFigure].Place, _figures[chosenFigure]);
+                        _map.GoOut(_figures[chosenFigure].GetPlace(), _figures[chosenFigure]);
                         _figures[chosenFigure].Go(number);
-                        if (_figures[chosenFigure].Place >= _map.GetLength())
+                        if (_figures[chosenFigure].GetPlace() >= _map.GetLength())
                         {
                             _map.GoHere(_map.GetLength(), _figures[chosenFigure]);
                         }
                         else
                         {
-                            _map.GoHere(_figures[chosenFigure].Place, _figures[chosenFigure]);
+                            _map.GoHere(_figures[chosenFigure].GetPlace(), _figures[chosenFigure]);
                         }
                     }
                 }
@@ -87,17 +87,17 @@ namespace SP220922.Models
                 Console.WriteLine("The figure was chosen automatically.");
                 for (int i = 0; i < _figures.Length; i++)
                 {
-                    if (!_figures[i].Ended && _figures[i].Started)
+                    if (!_figures[i].GetEnded() && _figures[i].GetStarted())
                     {
-                        _map.GoOut(_figures[i].Place, _figures[i]);
+                        _map.GoOut(_figures[i].GetPlace(), _figures[i]);
                         _figures[i].Go(number);
-                        if (_figures[i].Place >= _map.GetLength())
+                        if (_figures[i].GetPlace() >= _map.GetLength())
                         {
                             _map.GoHere(_map.GetLength(), _figures[i]);
                         }
                         else
                         {
-                            _map.GoHere(_figures[i].Place, _figures[i]);
+                            _map.GoHere(_figures[i].GetPlace(), _figures[i]);
                         }
                         break;
                     }
@@ -107,7 +107,7 @@ namespace SP220922.Models
 
         public bool CheckWin()
         {
-            if (_figures.All(f => f.Ended))
+            if (_figures.All(f => f.GetEnded()))
             {
                 Console.WriteLine("Player " + _color + " has won!");
                 return true;
