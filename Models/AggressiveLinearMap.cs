@@ -11,7 +11,7 @@ namespace SP220922.Models
             {
                 Places[i] = new AggressivePlace(i);
             }
-            Places[length] = new PeacefulPlace(length);
+            Places[length] = new Home(length);
         }
     }
 }

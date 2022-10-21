@@ -51,7 +51,7 @@ namespace SP220922
                 Player[] players = new Player[numberOfPlayers];
                 for (int i = 0; i < numberOfPlayers; i++)
                 {
-                    players[i] = new Player(chosenColors[i], numberOfFigures, lengthOfGame, map);
+                    players[i] = new Player(chosenColors[i], numberOfFigures, map);
                 }
 
                 while (true)

@@ -9,12 +9,12 @@ namespace SP220922.Models
         private Figure[] _figures;
         private Map _map;
 
-        public Player(String color, int numberOfFigures, int lengthOfGame, Map map)
+        public Player(String color, int numberOfFigures, Map map)
         {
             _figures = new Figure[numberOfFigures];
             for (int i = 0; i < numberOfFigures; i++)
             {
-                _figures[i] = new Figure(lengthOfGame, color);
+                _figures[i] = new Figure(color);
             }
             _color = color;
             _map = map;

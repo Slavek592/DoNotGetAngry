@@ -7,12 +7,10 @@ namespace SP220922.Models
         private bool _started;
         private int _place;
         private bool _ended;
-        private readonly int _lengthOfGame;
         private readonly string _color;
 
-        public Figure(int lengthOfGame, string color)
+        public Figure(string color)
         {
-            _lengthOfGame = lengthOfGame;
             _started = false;
             _place = 0;
             _ended = false;
@@ -28,8 +26,11 @@ namespace SP220922.Models
         public void Go(int length)
         {
             _place += length;
-            if (_place >= _lengthOfGame)
-                _ended = true;
+        }
+
+        public void YouEnded()
+        {
+            _ended = true;
         }
 
         public int GetPlace()

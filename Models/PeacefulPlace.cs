@@ -5,8 +5,12 @@ namespace SP220922.Models
 {
     public class PeacefulPlace : Place
     {
-        private List<Figure> _figures;
+        protected List<Figure> _figures;
 
+        protected PeacefulPlace()
+        {
+            _figures = new List<Figure>();
+        }
         public PeacefulPlace(int number)
         {
             _figures = new List<Figure>();
